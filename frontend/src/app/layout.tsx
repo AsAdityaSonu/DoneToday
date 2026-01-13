@@ -4,8 +4,8 @@ import { Inter } from 'next/font/google'
 const inter = Inter({ subsets: ['latin'] })
 
 export const metadata = {
-  title: 'DoneToday',
-  description: 'Track your daily accomplishments',
+  title: 'DSA Streak Tracker - Master Data Structures & Algorithms',
+  description: 'Track your daily DSA practice, maintain coding streaks, and organize your problem-solving journey',
 }
 
 export default function RootLayout({
@@ -14,8 +14,10 @@ export default function RootLayout({
   children: React.ReactNode
 }) {
   return (
-    <html lang="en">
-      <body className={inter.className}>{children}</body>
+    <html lang="en" className="dark">
+      <body className={`${inter.className} bg-background text-foreground`}>
+        {children}
+      </body>
     </html>
   )
 }
