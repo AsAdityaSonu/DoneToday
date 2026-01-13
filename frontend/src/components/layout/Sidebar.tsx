@@ -51,7 +51,7 @@ const Sidebar = memo(function Sidebar({ isOpen, onClose }: SidebarProps) {
                 <Code2 className="h-6 w-6 text-primary" />
               </div>
               <div>
-                <h2 className="text-lg font-bold text-foreground">DSA Streak</h2>
+                <h2 className="text-lg font-bold text-foreground">DoneToday</h2>
                 <p className="text-xs text-muted-foreground">Track & Improve</p>
               </div>
             </div>

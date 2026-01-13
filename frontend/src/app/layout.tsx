@@ -4,7 +4,7 @@ import { Inter } from 'next/font/google'
 const inter = Inter({ subsets: ['latin'] })
 
 export const metadata = {
-  title: 'DSA Streak Tracker - Master Data Structures & Algorithms',
+  title: 'Done Today',
   description: 'Track your daily DSA practice, maintain coding streaks, and organize your problem-solving journey',
 }
 
