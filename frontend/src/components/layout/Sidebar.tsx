@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, memo } from 'react';
+import { memo } from 'react';
 import { 
   BarChart3, 
   Calendar, 
@@ -15,18 +15,20 @@ import {
 interface SidebarProps {
   isOpen: boolean;
   onClose: () => void;
+  activeSection: string;
+  onSectionChange: (section: string) => void;
 }
 
 const menuItems = [
-  { name: 'Dashboard', icon: BarChart3, active: true, enabled: true, href: '#' },
-  { name: 'Today\'s Progress', icon: Target, active: false, enabled: false, href: '#' },
-  { name: 'Calendar View', icon: Calendar, active: false, enabled: false, href: '#' },
-  { name: 'Question Bank', icon: BookOpen, active: false, enabled: false, href: '#' },
-  { name: 'Analytics', icon: TrendingUp, active: false, enabled: false, href: '#' },
-  { name: 'Settings', icon: Settings, active: false, enabled: false, href: '#' },
+  { id: 'dashboard', name: 'Dashboard', icon: BarChart3, enabled: true },
+  { id: 'question-bank', name: 'Question Bank', icon: BookOpen, enabled: true },
+  { id: 'today-progress', name: 'Today\'s Progress', icon: Target, enabled: false },
+  { id: 'calendar', name: 'Calendar View', icon: Calendar, enabled: false },
+  { id: 'analytics', name: 'Analytics', icon: TrendingUp, enabled: false },
+  { id: 'settings', name: 'Settings', icon: Settings, enabled: false },
 ];
 
-const Sidebar = memo(function Sidebar({ isOpen, onClose }: SidebarProps) {
+const Sidebar = memo(function Sidebar({ isOpen, onClose, activeSection, onSectionChange }: SidebarProps) {
   return (
     <>
       {/* Overlay */}
@@ -51,7 +53,7 @@ const Sidebar = memo(function Sidebar({ isOpen, onClose }: SidebarProps) {
                 <Code2 className="h-6 w-6 text-primary" />
               </div>
               <div>
-                <h2 className="text-lg font-bold text-foreground">DoneToday</h2>
+                <h2 className="text-lg font-bold text-foreground">DSA Streak</h2>
                 <p className="text-xs text-muted-foreground">Track & Improve</p>
               </div>
             </div>
@@ -73,24 +75,25 @@ const Sidebar = memo(function Sidebar({ isOpen, onClose }: SidebarProps) {
             <nav className="space-y-1">
               {menuItems.map((item) => {
                 const Icon = item.icon;
+                const isActive = activeSection === item.id;
                 return (
                   <div
-                    key={item.name}
+                    key={item.id}
                     className={`
                       group flex items-center justify-between px-3 py-2.5 rounded-xl transition-all duration-200
-                      ${item.active && item.enabled
+                      ${isActive && item.enabled
                         ? 'bg-primary text-primary-foreground shadow-lg shadow-primary/25' 
                         : item.enabled
                         ? 'text-muted-foreground hover:bg-accent/50 hover:text-accent-foreground cursor-pointer'
                         : 'text-muted-foreground/40 cursor-not-allowed'
                       }
                     `}
-                    onClick={item.enabled ? undefined : (e) => e.preventDefault()}
+                    onClick={item.enabled ? () => onSectionChange(item.id) : (e) => e.preventDefault()}
                   >
                     <div className="flex items-center space-x-3">
                       <div className={`
                         p-1.5 rounded-lg transition-colors
-                        ${item.active && item.enabled
+                        ${isActive && item.enabled
                           ? 'bg-primary-foreground/20' 
                           : 'group-hover:bg-accent/30'
                         }

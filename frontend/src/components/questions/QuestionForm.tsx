@@ -78,7 +78,7 @@ const QuestionForm = memo(function QuestionForm({ isOpen, onClose, onSubmit }: Q
     <div className="fixed inset-0 bg-black bg-opacity-50 z-50 flex items-center justify-center p-4">
       <div className="bg-card rounded-lg border max-w-2xl w-full max-h-[90vh] overflow-y-auto">
         <div className="flex items-center justify-between p-6 border-b border-border">
-          <h2 className="text-xl font-semibold text-foreground">Add New Question</h2>
+          <h2 className="text-xl font-semibold text-foreground">Add to Streak</h2>
           <button
             onClick={onClose}
             className="text-muted-foreground hover:text-foreground"
@@ -220,7 +220,7 @@ const QuestionForm = memo(function QuestionForm({ isOpen, onClose, onSubmit }: Q
               Cancel
             </Button>
             <Button type="submit" variant="primary">
-              Add Question
+              Add to Streak
             </Button>
           </div>
         </form>

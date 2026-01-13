@@ -10,41 +10,10 @@ import QuestionList from '@/components/questions/QuestionList';
 import { Question, StreakStats } from '@/types';
 import { formatDate } from '@/lib/utils';
 
-// Mock data
-const INITIAL_QUESTIONS: Question[] = [
-  {
-    id: '1',
-    title: 'Two Sum',
-    difficulty: 'Easy',
-    tags: ['Array', 'TwoPointers'],
-    approach: 'Use a hash map to store complements and find the pair in one pass.',
-    solution: 'def twoSum(nums, target):\n    seen = {}\n    for i, num in enumerate(nums):\n        complement = target - num\n        if complement in seen:\n            return [seen[complement], i]\n        seen[num] = i',
-    notes: 'Classic problem, good for understanding hash maps.',
-    completedAt: new Date('2024-01-13'),
-    timeSpent: 25,
-    platform: 'LeetCode'
-  },
-  {
-    id: '2',
-    title: 'Binary Tree Inorder Traversal',
-    difficulty: 'Medium',
-    tags: ['Tree', 'Stack'],
-    approach: 'Use iterative approach with stack to simulate recursion.',
-    completedAt: new Date('2024-01-12'),
-    timeSpent: 35,
-    platform: 'LeetCode'
-  },
-  {
-    id: '3',
-    title: 'Longest Palindromic Substring',
-    difficulty: 'Medium',
-    tags: ['String', 'DynamicProgramming'],
-    approach: 'Expand around centers approach for O(n²) solution.',
-    completedAt: new Date('2024-01-11'),
-    timeSpent: 45,
-    platform: 'LeetCode'
-  }
-];
+interface DashboardProps {
+  questions: Question[];
+  onAddQuestion: (questionData: Omit<Question, 'id' | 'completedAt'>) => void;
+}
 
 const INITIAL_STREAK_DATA: Record<string, number> = {
   '2024-01-13': 3,
@@ -59,19 +28,12 @@ const INITIAL_STREAK_DATA: Record<string, number> = {
   '2024-01-03': 3,
 };
 
-export default function Dashboard() {
-  const [questions, setQuestions] = useState<Question[]>(INITIAL_QUESTIONS);
+export default function Dashboard({ questions, onAddQuestion }: DashboardProps) {
   const [isFormOpen, setIsFormOpen] = useState(false);
   const [streakData, setStreakData] = useState<Record<string, number>>(INITIAL_STREAK_DATA);
 
   const handleAddQuestion = useCallback((questionData: Omit<Question, 'id' | 'completedAt'>) => {
-    const newQuestion: Question = {
-      ...questionData,
-      id: Date.now().toString(),
-      completedAt: new Date(),
-    };
-    
-    setQuestions(prev => [newQuestion, ...prev]);
+    onAddQuestion(questionData);
     
     // Update streak data
     const today = formatDate(new Date());
@@ -79,7 +41,7 @@ export default function Dashboard() {
       ...prev,
       [today]: (prev[today] || 0) + 1
     }));
-  }, []);
+  }, [onAddQuestion]);
 
   // Calculate stats with useMemo for performance
   const stats = useMemo((): StreakStats => {
@@ -144,7 +106,7 @@ export default function Dashboard() {
         </div>
         <Button onClick={() => setIsFormOpen(true)} className="flex items-center space-x-2">
           <Plus className="h-4 w-4" />
-          <span>Add Question</span>
+          <span>Add Streak</span>
         </Button>
       </div>
 
